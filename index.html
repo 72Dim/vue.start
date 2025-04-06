@@ -1,0 +1,336 @@
+<!-- <!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <link rel="icon" href="/favicon.ico">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Vue.start</title>
+   <!-- Uncaught ReferenceError: Vue is not defined
+      https://stackoverflow.com/questions/36210062/vue-is-not-defined
+      <script src="~/lib/vue/vue_v2.5.16.js"></script>
+      <script src="~/vue/blade-account-update-credit-card-vue.js"
+         asp-append-version="true"></script>
+      и волшебным образом это сработало.
+      Поэтому я предполагаю, что vue js нужно загрузить поверх .vue
+      Новый проэкт предпочтительно создавать через:
+      npm create vue@latest   смотри на странице:
+      https://vuejs.org/guide/quick-start.html
+   -->
+   <!-- Не удачные пробы
+      <script src="https://unpkg.com/vue@next" data-infa="для обучения"></script>
+      <script src="https://unpkg.com/vue"></script>
+      <script type="text/javascript"
+         src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js">
+      </script>
+   -->
+   <script type="text/javascript" data-infa="работает"
+      src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js">
+   </script>
+   <!-- <link rel="stylesheet" type="text/css" href="assets/css/app.css"/> -->
+   <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      crossorigin="anonymous">
+   <style>
+      .block-properties{
+         /* border: solid 1px black; */
+      }
+
+   </style>
+</head>
+<body>
+   <div id="app">
+      <!-- <div class="container-fluid"> -->
+      <div class="container">
+         <div class="navbar navbar-default"
+            style="background-color: brown;">
+            <div class="row"
+            style="margin: 0;">
+               <div class="col-10"
+                  style="display: inline-block;">
+                  <!-- <header class="col-10 text-left block-properties" -->
+                  <header class="text-left block-properties"
+                        style="display: inline-block;
+                           vertical-align: middle;
+                           margin-right: 0;
+                           margin-left: 0;">
+                     <h1 v-text="sitename"
+                        style="color: burlywood;
+                           margin: 10px;"></h1>
+                  </header>
+               </div>
+               <div class="col-2"
+                  style="display: inline-block;
+                     display: inline-block;
+                     float: right;
+                     margin: 20px 10px;">
+                  <!-- <div class="col-2 nav navbar-nav navbar-right cart block-properties" -->
+                  <div class="nav navbar-nav navbar-right cart block-properties"
+                        style="display: inline-block;
+                           margin: 0;
+                           border-radius: 3px;
+                           background-color: lightgray;
+                           padding: 0 5px;">
+                     <span
+                        class="glyphicon glyphicon-sopping-cart"
+                        style="vertical-align: top;
+                           top: 0;">
+                        [{{ cartItemCount }}] Checkout
+                     </span>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- <div class="row align-items-center"> -->
+         <div class="row"
+            style="margin-right: 0;
+               margin-left: 0;">
+            <div class="col block-properties" style="display: inline-block;">
+               <!-- <figure></figure> -->
+               <!-- <img v-bind:src="product.image" alt="Cat"> -->
+               <img :src="product.image" alt="Cat">
+            </div>
+            <div class="col text-center block-properties" style="display: inline-block;">
+               <h1 v-text="product.title"></h1>
+               <p v-html="product.description"></p>
+               <p v-text="product.price"></p>
+               <button class="default"
+                  v-on:click="addToCart"
+                  v-show="canAddToCart">
+                  Add to cart
+               </button>
+            </div>
+            <div class="col text-center block-properties" style="display: inline-block;">
+               <p>
+                  Area is equal to: {{ area }}
+               </p>
+               <button v-on:click="length += 1">Add length</button>
+               <button v-on:click="width  += 1">Add width</button>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <button class="default"
+      v-on:click="addToCart"
+      v-if="canAddToCart">
+      Add to cart
+   </button>
+
+   <button class="disabled"
+      v-else>
+      Add to cart
+   </button>
+------------------------------
+<div class="col-md-6">
+	<strong>First name:</strong>
+	<input v-model="order.firstName"
+		class="form-control"/>
+</div>
+<div class="col-md-6">
+	<strong>Last name:</strong>
+	<input v-model="order.lastName"
+		class="form-control"/>
+</div>
+<div class="form-group">
+	<div class="col-md-12">
+		<strong>Adress:</strong>
+		<div class="col-md-12">
+			<input v-model="order.adress"
+			class="form-control"/>
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-md-12">
+		<strong>City:</strong>
+		<div class="col-md-12">
+			<input v-model="order.city"
+			class="form-control"/>
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-md-2">
+		<strong>State:</strong>
+		<select v-model="order.state"
+			class="form-control">
+			<option disabled value="">State</option>
+			<option>AL</option>
+			<option>AR</option>
+			<option>CA</option>
+			<option>NV</option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-md-6">
+		<strong>Zip / Postal Code:</strong>
+		<input v-model="order.zip"
+			class="form-control"/>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-md-6 boxes">
+		<input type="checkbox"
+			id="gift"
+			value="true"
+			v-model="order.gift">
+		<label for="gift">Ship As Gift?</label>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-md-6 boxes">
+		<input type="radio"
+			id="home"
+			value="Home"
+			v-model="order.method">
+		<label for="home"></label>
+		<input type="radio"
+			id="business"
+			value="Business"
+			v-model="order.method">
+		<label for="business">Business</label>
+	</div>
+</div>
+<div class="col-md-12 verify">
+	<pre>
+		First name: {{order.firstName}}
+		Last name: {{order.lastName}}
+		Adress: {{order.adress}}
+		City: {{order.city}}
+		Zip: {{order.zip}}
+		State: {{order.state}}
+		Method: {{order.method}}
+		Gift: {{order.gift}}
+	</pre>
+</div>
+
+
+   <script type="text/javascript">
+      // 1  Вставить в файл index.html webstore.sitename="New test text."
+      var APP_LOG_LIFECYCLE_EVENTS = false; // or false
+      var webstore = new Vue({
+         el: "#app",
+         data: {
+               sitename: "Vue test.",
+               length: 5,
+               width: 3,
+               product: {
+                  id: 1001,
+                  title: "Dog Food, 25lb bag",
+                  description: "A 25 pound bag of <em>irresistible</em>,"
+                           +"organic goodness for your dog.",
+                  price: 2000,
+                  image: "/src/assets/images/Cat.png",
+                  availableInventory: 5
+               },
+               cart: [],
+               orders: {
+                  firstName: '',
+                  lastName: '',
+                  adress: '',
+                  city: '',
+                  zip: '',
+                  state: '',
+                  method: '',
+                  gift: '',
+               }
+         },
+         filters: {},
+         methods: {
+            addToCart: function() {
+               this.cart.push(this.product.id);
+            }
+         },
+         computed: { // вычисляемые
+            area: function() {
+               return this.width*this.length;
+            },
+            cartItemCount: function() {
+               return this.cart.length || '';
+            },
+            canAddToCart: function() {
+               return this.product.availableInventory > this.cartItemCount;
+            }
+         },
+         watch: { // смотреть, наблюдать
+            length: function (newVal, oldVal) {
+               console.log('The old value of length was: '+oldVal
+                  +'\nThe new value of length is: '+newVal
+               );
+            },
+            width: function (newVal, oldVal) {
+               console.log('The old value of width was: '+oldVal
+                  +'\nThe new value of width is: '+newVal
+               );
+            },
+            area: function (newVal, oldVal) {
+               console.log('The old value of area was: '+oldVal
+                  +'\nThe new value of area is: '+newVal
+               );
+            }
+         },
+         beforeUpdate: function() {
+            console.log('All those data changes happend '
+               +'before the output gets updated.'
+            );
+
+         },
+         beforeCreate: function() {
+            if (APP_LOG_LIFECYCLE_EVENTS) {
+               console.log("beforeCreate");
+            }
+         },
+         created: function() {
+               if (APP_LOG_LIFECYCLE_EVENTS) {
+                  console.log("created");
+               }
+         },
+         beforeMount: function() {
+               if (APP_LOG_LIFECYCLE_EVENTS) {
+                  console.log("beforeMount");
+               }
+         },
+         mounted: function() {
+               if (APP_LOG_LIFECYCLE_EVENTS) {
+                  console.log("mounted");
+               }
+         },
+         beforeUpdate: function() {
+               if (APP_LOG_LIFECYCLE_EVENTS) {
+                  console.log("beforeUpdate");
+               }
+         },
+         updated: function() {
+               if (APP_LOG_LIFECYCLE_EVENTS) {
+                  console.log("updated:");
+               }
+         },
+         beforeDestroy: function() {
+               if (APP_LOG_LIFECYCLE_EVENTS) {
+                  console.log("beforeDestroy");
+               }
+         },
+         destroyed: function() {
+               if (APP_LOG_LIFECYCLE_EVENTS) {
+                  console.log("destroyed");
+               }
+         },
+      });
+   </script>
+</body>
+</html>
