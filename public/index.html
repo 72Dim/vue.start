@@ -397,20 +397,123 @@
                // console.log("beforeCreate");
             }
          },
-         created: function () {
+
+         /*created: function () {  // синтаксис- axios.get('url').then().catch().finally()
             if (APP_LOG_LIFECYCLE_EVENTS) {
                console.log("created"); // \vue.start\public\products.json
                axios.get('products.json') // index и products.json водной папке public
-               // axios.get('./products.json') // работает когда vue.start/products.json
-                  .then((response) => {
-                     console.log(this.products);
+                  // axios.get('./products.json') // работает когда vue.start/products.json
+               .then((response) => {
+                  console.log(this.products);
+                  // {data: {…}, status: 200, statusText: 'OK', headers: r, config: {…}, …}
+                  console.log(response);
+                  console.log(response.data);
+                  console.log('statusCode: '+response.status);
+                  if (response.status === 200) {
+                     console.log('statusText: '+response.statusText);
+                     console.log(response.headers);
+                     console.log('content-type: '+response.headers['content-type']);
+                     console.log(response.config);
                      console.log(response.data.products);
                      // console.log(JSON.parse(response.data));
                      this.products = response.data.products;
                      console.log(this.products);
+                  }
+                  else {
+                     (function() {
+                        console.log(
+                           "Page not found.\n Страница не найдена."
+                     )})();
+                  }
+               })
+               .catch(error => {
+                  // Работает только при ошибке/исключении
+                  console.log(error);
+                  // alert(error); // Security Error
+               })
+               .finally(onfinally => {
+                  // Код здесь всегда работает.
+                  // Не имеет значения, была ли ошибка или нет.
+
                });
             }
+         }, */
+
+         /*created: function () {  // синтаксис- axios({key: value}).then().catch()
+            axios({
+               method: 'get',
+               url: 'products.json',
+            })
+            .then(function (response) {
+               console.log(response.data);
+            })
+            .catch(function (error) {
+               if (error.response) {
+                  // Запрос был сделан, и сервер ответил кодом состояния, который
+                  // выходит за пределы 2xx. Например ошибка в пути к вайлу или ...
+                  console.log(error.response.data);
+                  console.log(error.response.status);
+                  console.log(error.response.headers);
+               } else if (error.request) {
+                  // Запрос был сделан, но ответ не получен хотя заголовки пришли
+                  // Например ошибка в пути к вайлу или ...
+                  // `error.request`- это экземпляр XMLHttpRequest в браузере и экземпляр
+                  // http.ClientRequest в node.js
+                  console.log(error.request);
+               } else {
+                  // Произошло что-то при настройке запроса, вызвавшее ошибку в:
+                  // then(),
+                  console.log('Error', error.message);
+               }
+               console.log(error.config);
+            });
+         }, */
+
+         created: function () {  // синтаксис- axios.create({}).then().catch()
+            const instance = axios.create({
+               // baseURL: 'https://some-domain.com/api/',
+               // baseURL: 'http://localhost:8000/products.json',
+               timeout: 1000,
+               headers: {'X-Custom-Header-1': 'Want-1 products.json'}
+               });
+
+            instance.get('http://localhost:8000/products.json',
+               {
+                  headers: {
+                     'X-Requested-With': 'XMLHttpRequest',
+                     'X-Custom-Header-2': 'Want-2 products.json',
+                  },
+                  params: {
+                     ID: 12345
+                  }
+               })
+            // instance.get()
+            .then(function (response) {
+               console.log(response.data);
+            })
+            .catch(function (error) {
+               if (error.response) {
+                  /* Запрос был сделан, и сервер ответил кодом состояния, который
+                  выходит за пределы 2xx. Например ошибка в пути к вайлу или
+                  внутренняя ошибка сервера или ... */
+                  console.log(error.response.data);
+                  console.log(error.response.status);
+                  console.log(error.response.headers);
+               } else if (error.request) {
+                  /*Запрос был сделан, но ответ не получен хотя заголовки пришли
+                  Например ошибка в пути к вайлу или ...
+                  `error.request`- это экземпляр XMLHttpRequest в браузере и экземпляр
+                  http.ClientRequest в node.js*/
+                  console.log(error.request);
+               } else {
+                  /* Произошло что-то при настройке запроса, вызвавшее ошибку в:
+                  then(), ... */
+                  console.log('Error', error.message);
+               }
+               console.log(error.config);
+            });
          },
+
          beforeMount: function () {
             if (APP_LOG_LIFECYCLE_EVENTS) {
                // console.log("beforeMount");
