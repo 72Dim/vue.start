@@ -1,48 +1,27 @@
-<!-- <!DOCTYPE html>
-<html lang="">
-  <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
    <meta charset="UTF-8">
    <link rel="icon" href="/favicon.ico">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Vue.start</title>
-   <!-- Uncaught ReferenceError: Vue is not defined
-      https://stackoverflow.com/questions/36210062/vue-is-not-defined
-      <script src="~/lib/vue/vue_v2.5.16.js"></script>
-      <script src="~/vue/blade-account-update-credit-card-vue.js"
-         asp-append-version="true"></script>
-      и волшебным образом это сработало.
-      Поэтому я предполагаю, что vue js нужно загрузить поверх .vue
-      Новый проэкт предпочтительно создавать через:
-      npm create vue@latest   смотри на странице:
-      https://vuejs.org/guide/quick-start.html
+   <!-- CDNJS – это популярная платформа для ускоренной доставки
+      JavaScript-библиотек. Аббревиатура CDN расшифровывается как
+      «content delivery network» (сеть доставки контента) или
+      «content distribution network» (сеть распределения контента).
    -->
-   <!-- Не удачные пробы
-      <script src="https://unpkg.com/vue@next" data-infa="для обучения"></script>
-      <script src="https://unpkg.com/vue"></script>
-      <script type="text/javascript"
-         src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js">
-      </script>
-   -->
-   <script type="text/javascript" data-infa="работает" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js">
+   <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"
+      data-infa="работает">
    </script>
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+      data-infa="работает">
+   </script>
+
    <!-- <link rel="stylesheet" type="text/css" href="assets/css/app.css"/> -->
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
       crossorigin="anonymous">
+
    <style>
       .wrap-for-header {
          display: inline-block;
@@ -106,7 +85,7 @@
 </head>
 
 <body>
-   <div id="app"><!-- <div class="container-fluid"> -->
+   <div id="app">
       <div class="container">
          <div class="navbar navbar-default" style="background-color: brown;">
             <div class="row" style="margin: 0;">
@@ -286,8 +265,35 @@
 
 
 
+   <!-- <script type="module" data-infa="axios пока не работает">
+            // import axios from 'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'; // не работает
+            // console.dir(axios);
+            // axios({
+            //    method: 'get',
+            //    // url: 'http://bit.ly/2mTM3nY',
+            //    url: '/static/products.json'
+            //    })
+            //    .then(function (response) {
+            //       response.data.pipe(fs.createWriteStream('ada_lovelace.jpg'))
+            // });
+            // var prods = null;
+            // axios.get('/static/products.json')
+            //    .then((response) => {
+            //       prods = response.data.products;
+            //       console.log(prods);
+            // });
+            // const axi = axios.create({
+            //    // method: 'get',
+            //    baseURL: 'https://some-domain.com/api/',
+            //    headers: {
+            //       'Content-Type': 'application/json'
+            //    }
+            // });
+            // console.log(axi);
+</script> -->
 
    <script type="text/javascript">
+      console.dir(axios);
       var APP_LOG_LIFECYCLE_EVENTS = false; // or false webstore.order.method
       var webstore = new Vue({
          el: "#app",
@@ -299,7 +305,7 @@
             products: [],
             product: {
                id: 1001,
-               title: "Dog Food, 25lb bag",
+               title: "Cat Food, 25lb bag",
                description: "A 25 pound bag of <em>irresistible</em>,"
                   + "organic goodness for your dog.",
                price: 2000,
@@ -394,6 +400,11 @@
          created: function () {
             if (APP_LOG_LIFECYCLE_EVENTS) {
                console.log("created");
+               axios.get('/products.json')
+                  .then((response) => {
+                     this.products = response.data.products;
+                     console.log(products);
+               });
             }
          },
          beforeMount: function () {
